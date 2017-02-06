@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<http pattern="/loginControl" security="none" />
+	<http pattern="/register" security="none" />
+	<http use-expressions="true">
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<form-login login-page="/loginControl"
+			authentication-failure-url="/loginControl?login_error=true"
+			login-processing-url="/validate" username-parameter="name"
+			password-parameter="password" default-target-url="/user/login" />
+
+		<logout delete-cookies="JSESSIONID" logout-url="/logOut" logout-success-url="/test.jsp"/>
+		<csrf disabled="true" />
+	</http>
+<!-- r
+	<beans:bean id="myAuthenticationProvider"
+		class="edu.neu.ems.security.MyAuthenticationProvider" />
+ -->
+	<beans:bean id="securityDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/bloghub" />
+		<beans:property name="username" value="root" />
+		<beans:property name="password" value="" />
+	</beans:bean>
+
+	<authentication-manager>
+		<!-- in-memory authentication provider, only useful for prototype applications 
+			that don't require complex security infrastructure -->
+		<authentication-provider>
+			<user-service>
+				<user name="admin" password="password" authorities="ROLE_ADMIN" />
+			</user-service>
+		</authentication-provider>
+
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="securityDataSource"
+				authorities-by-username-query="select name, authority from USER where name = ?"
+				users-by-username-query="select name, password, true from USER where name = ?" />
+		</authentication-provider>
+		<!-- <authentication-provider ref="myAuthenticationProvider" /> -->
+	</authentication-manager>
+</beans:beans>
