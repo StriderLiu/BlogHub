@@ -8,6 +8,12 @@ Blog Website built on Spring MVC and Hibernate
 	
 * Applied Bootstrap to decorating the front end, implement the partial refresh and page flip functions with JQuery and AngularJS
 
+# Requirements
+
+* JDK 7.0+
+* Apache Tomcat 7
+* Spring Tool Suite (Eclipse)
+
 # Notes
 
 * Back end is built on 4-layers model: Controller, Service, DAO, Domain
