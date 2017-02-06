@@ -14,7 +14,7 @@ Blog Website built on Spring MVC and Hibernate
 
 	1. Controllers deal with web requests and dispatch them to service
 	2. Services will complete the task and interact with database using DAO interfaces
-	3. DAO is responsible for data processing (via Hibernate and HQL) and manipulating basic domain objects
+	3. DAO classes are responsible for data processing (via Hibernate and HQL) and manipulating basic domain objects
 	4. Domain classes are java beans generated based on system design, they are also binded with corresponding database schemas via 	Hibernate
 
 * All configuration is done via annotations instead of XML because annotatioins are cleaner and more maintainable.
